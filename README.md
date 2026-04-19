@@ -1,18 +1,24 @@
-# payload-consequence-analyser
-Check AI Payload Before Merge Analyser
-# Payload Consequence Analyzer 
-## What This Is 
-A tool that tells you what actually happens if you merge a branch — 
-before you merge it. 
-## The Incident That Built This 
-On April 18, 2026, OpenAI's Codex surfaced a pull request on my 
-AIntegrity repository described as a "minor syntax fix." 
-The branch was 10 months old. If merged: - 60 files deleted - 11,967 lines of code removed - 217 passing tests destroyed - 98.7% of the working codebase gone 
-Nothing in the Codex review surface communicated this. 
-See FORENSIC_REPORT.md for the full analysis. 
-## What It Does 
-Before you merge any AI-generated PR, this tool answers: 
-1. How many files are deleted vs added? 
-2. How old is the branch vs current main? 
-3. Do the deletions destroy tests, APIs, or core architecture? 
-4. Does the PR description match what the diff actually does?
+ #PayloadGuard: Destructive Merge Detection
+ 
+ Detect catastrophic code payloads before they're merged.
+ 
+##The Problem
+
+41% of shipped code is AI-generated. Dependency automation merges PRs without review. Supply chain attacks hide destructive payloads in legitimate-looking suggestions.
+
+**April 2026 Real Incident:** User received Codex suggestion for "minor syntax fix." Branch was 10 months old, would have deleted 60 files, 11,967 lines, 217 tests, and entire architecture.
+
+## The Solution
+
+PayloadGuard analyzes branches before merge and answers five critical questions:
+
+1. **Scope Question** — How many files/lines change?
+2. **Impact Question** — What gets removed?
+3. **Temporal Question** — Is this branch current?
+4. **Consequence Question** — What breaks after merge?
+5. **Transparency Question** — Does the PR description match the actual diff?
+
+## Quick Start
+```bashpip
+ install -r requirements.txt
+python analyze.py /path/to/repo feature-branch main
